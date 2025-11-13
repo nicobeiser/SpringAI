@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import './App.css'; // Opcional, para estilos básicos
+import './App.css'; 
 
 function App() {
   const [prompt, setPrompt] = useState('');
   const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
-  const API_URL = 'http://localhost:8080/api/groqai/';
+
+  //If its on the server it will take the first path which is configurated on an enviorment vairable on render
+  //If its running locally, theres no env variable so it goes with the localhost
+  const API_URL =
+  import.meta.env.VITE_API_URL || 'http://localhost:8080/api/groqai/';
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +25,7 @@ function App() {
         method: 'GET',
       });
       const data = await res.text();
-      setResponse(data); // Ajusta según tu backend
+      setResponse(data); 
     } catch (error) {
       setResponse('Error al enviar el prompt');
     }
@@ -38,7 +43,7 @@ function App() {
     <div className="App" style={{
       padding: '20px',
       fontFamily: 'Arial, sans-serif',
-      backgroundColor: '#f0f8ff', // Fondo azul claro
+      backgroundColor: '#f0f8ff',
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
@@ -63,7 +68,7 @@ function App() {
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={handleKeyDown} // Agregado para enviar con Enter
+          onKeyDown={handleKeyDown} 
           placeholder="Escribe tu prompt aquí..."
           rows="5"
           cols="50"
@@ -81,7 +86,7 @@ function App() {
           disabled={loading} 
           style={{ 
             padding: '10px 20px', 
-            backgroundColor: loading ? '#6c757d' : '#007bff', // Gris cuando cargando, azul cuando no
+            backgroundColor: loading ? '#6c757d' : '#007bff', 
             color: 'white', 
             border: 'none', 
             borderRadius: '10px', 
@@ -99,7 +104,7 @@ function App() {
           padding: '20px', 
           border: '2px solid #007bff', 
           borderRadius: '10px', 
-          backgroundColor: '#e6f7ff', // Fondo azul claro para la respuesta
+          backgroundColor: '#e6f7ff', 
           width: '100%', 
           maxWidth: '600px' 
         }}>
